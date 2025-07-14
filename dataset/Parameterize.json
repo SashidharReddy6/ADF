@@ -1,0 +1,48 @@
+{
+	"name": "Parameterize",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage_LS",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "output"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "Movie_Name",
+				"type": "String"
+			},
+			{
+				"name": "movie type",
+				"type": "String"
+			},
+			{
+				"name": "view_count",
+				"type": "String"
+			},
+			{
+				"name": "like_count",
+				"type": "String"
+			},
+			{
+				"name": "comment_count",
+				"type": "String"
+			},
+			{
+				"name": "Gender",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

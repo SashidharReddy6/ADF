@@ -1,0 +1,58 @@
+{
+	"name": "pivot",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "pivot",
+						"type": "DatasetReference"
+					},
+					"name": "pivot1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "Pivott",
+						"type": "DatasetReference"
+					},
+					"name": "sink"
+				}
+			],
+			"transformations": [
+				{
+					"name": "pivot"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          JerseyNumber as string,",
+				"          Name as string,",
+				"          Gender as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> pivot1",
+				"pivot1 pivot(groupBy(JerseyNumber),",
+				"     pivotBy(Gender, ['TotalMalePlayers', 'TotaFelmalePlayers']),",
+				"     {} = count(JerseyNumber),",
+				"     columnNaming: '$N$V',",
+				"     lateral: true) ~> pivot",
+				"pivot sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          Movie_Name as string,",
+				"          {movie type} as string,",
+				"          view_count as string,",
+				"          like_count as string,",
+				"          comment_count as string,",
+				"          Gender as string",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink"
+			]
+		}
+	}
+}

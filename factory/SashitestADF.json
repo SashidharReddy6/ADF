@@ -1,0 +1,9 @@
+{
+	"name": "SashitestADF",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "65c6fd20-64da-499c-8ffd-7c41fd45d3db",
+		"tenantId": "efdb13f9-02b6-4324-b10f-c0df80a73f65"
+	}
+}

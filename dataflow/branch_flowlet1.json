@@ -1,0 +1,29 @@
+{
+	"name": "branch_flowlet1",
+	"properties": {
+		"type": "Flowlet",
+		"typeProperties": {
+			"sources": [],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "employee1"
+				},
+				{
+					"name": "output"
+				}
+			],
+			"scriptLines": [
+				"input(output(",
+				"          empid as string,",
+				"          name as string,",
+				"          country as string,",
+				"          dept as string",
+				"     ),",
+				"     order: 0,",
+				"     allowSchemaDrift: true) ~> employee1",
+				"employee1 output() ~> output"
+			]
+		}
+	}
+}
