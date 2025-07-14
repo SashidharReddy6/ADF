@@ -1,0 +1,30 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "SashitestADF"
+		},
+		"AzureBlobStorage_LS_connectionString": {
+			"value": ""
+		},
+		"SqlServer_LS_password": {
+			"value": ""
+		},
+		"SqlServer_LS_properties_typeProperties_server": {
+			"value": "AAPL-L-872\\SQLEXPRESS"
+		},
+		"SqlServer_LS_properties_typeProperties_database": {
+			"value": "AFFINE"
+		},
+		"SqlServer_LS_properties_typeProperties_userName": {
+			"value": "SA"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
