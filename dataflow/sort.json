@@ -1,0 +1,57 @@
+{
+	"name": "sort",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "customers",
+						"type": "DatasetReference"
+					},
+					"name": "source"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "sort_output",
+						"type": "DatasetReference"
+					},
+					"name": "sink"
+				}
+			],
+			"transformations": [
+				{
+					"name": "sort"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          OrderID as string,",
+				"          CustomerID as string,",
+				"          Amount as string,",
+				"          OrderDate as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source",
+				"source sort(asc(Amount, true)) ~> sort",
+				"sort sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          Movie_Name as string,",
+				"          {movie type} as string,",
+				"          view_count as string,",
+				"          like_count as string,",
+				"          comment_count as string,",
+				"          Gender as string",
+				"     ),",
+				"     partitionFileNames:['sort_output'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> sink"
+			]
+		}
+	}
+}
