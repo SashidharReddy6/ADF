@@ -2,7 +2,7 @@
 	"name": "DelimitedText1",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "AzureBlobStorage_LS",
+			"referenceName": "AzureBlobStorage1",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
@@ -10,7 +10,9 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"container": "output"
+				"fileName": "employee_pivot.csv",
+				"folderPath": "pivot_source",
+				"container": "input"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
@@ -19,27 +21,23 @@
 		},
 		"schema": [
 			{
-				"name": "Movie_Name",
+				"name": "id",
 				"type": "String"
 			},
 			{
-				"name": "movie type",
+				"name": "name",
 				"type": "String"
 			},
 			{
-				"name": "view_count",
+				"name": "gender",
 				"type": "String"
 			},
 			{
-				"name": "like_count",
+				"name": "country",
 				"type": "String"
 			},
 			{
-				"name": "comment_count",
-				"type": "String"
-			},
-			{
-				"name": "Gender",
+				"name": "age",
 				"type": "String"
 			}
 		]

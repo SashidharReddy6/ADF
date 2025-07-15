@@ -1,0 +1,9 @@
+{
+	"name": "AzuredevopsADF66",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "75cb9139-c825-42fd-a05c-809865112b5d",
+		"tenantId": "efdb13f9-02b6-4324-b10f-c0df80a73f65"
+	}
+}
