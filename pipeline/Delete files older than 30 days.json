@@ -18,18 +18,8 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataset": {
-						"referenceName": "BinaryDatasetForDeleteActivity",
-						"type": "DatasetReference",
-						"parameters": {
-							"FolderPath": {
-								"value": "@pipeline().parameters.SourceFolder",
-								"type": "Expression"
-							},
-							"Directory": {
-								"value": "@pipeline().parameters.SourceDirectory",
-								"type": "Expression"
-							}
-						}
+						"referenceName": "delete",
+						"type": "DatasetReference"
 					},
 					"logStorageSettings": {
 						"linkedServiceName": {
