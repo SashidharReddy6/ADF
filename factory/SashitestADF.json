@@ -1,5 +1,13 @@
 {
 	"name": "SashitestADF",
+	"properties": {
+		"globalParameters": {
+			"RootPath": {
+				"type": "string",
+				"value": "input/surrogate_source"
+			}
+		}
+	},
 	"location": "eastus",
 	"identity": {
 		"type": "SystemAssigned",
