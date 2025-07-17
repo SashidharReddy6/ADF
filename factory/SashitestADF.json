@@ -13,6 +13,10 @@
 			"Directory": {
 				"type": "string",
 				"value": "surrogate_source"
+			},
+			"sashi_test": {
+				"type": "string",
+				"value": "test"
 			}
 		}
 	},
