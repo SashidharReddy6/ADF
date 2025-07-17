@@ -19,13 +19,17 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage_LS'"
 		},
+		"LS_AzureDataLakeStorage_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'LS_AzureDataLakeStorage'"
+		},
 		"SqlServer_LS_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'SqlServer_LS'"
 		},
-		"LS_AzureDataLakeStorage_accountKey": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accountKey' of 'LS_AzureDataLakeStorage'"
+		"LS_AzureDataLakeStorage_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://storage230620251.dfs.core.windows.net/"
 		},
 		"SqlServer_LS_properties_typeProperties_server": {
 			"type": "string",
@@ -38,10 +42,6 @@
 		"SqlServer_LS_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "SA"
-		},
-		"LS_AzureDataLakeStorage_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://storage230620251.dfs.core.windows.net/"
 		},
 		"containerUri": {
 			"type": "string",
@@ -79,11 +79,14 @@
 					"AzureBlobStorage_LS_connectionString": {
 						"value": "[parameters('AzureBlobStorage_LS_connectionString')]"
 					},
+					"LS_AzureDataLakeStorage_accountKey": {
+						"value": "[parameters('LS_AzureDataLakeStorage_accountKey')]"
+					},
 					"SqlServer_LS_password": {
 						"value": "[parameters('SqlServer_LS_password')]"
 					},
-					"LS_AzureDataLakeStorage_accountKey": {
-						"value": "[parameters('LS_AzureDataLakeStorage_accountKey')]"
+					"LS_AzureDataLakeStorage_properties_typeProperties_url": {
+						"value": "[parameters('LS_AzureDataLakeStorage_properties_typeProperties_url')]"
 					},
 					"SqlServer_LS_properties_typeProperties_server": {
 						"value": "[parameters('SqlServer_LS_properties_typeProperties_server')]"
@@ -93,9 +96,6 @@
 					},
 					"SqlServer_LS_properties_typeProperties_userName": {
 						"value": "[parameters('SqlServer_LS_properties_typeProperties_userName')]"
-					},
-					"LS_AzureDataLakeStorage_properties_typeProperties_url": {
-						"value": "[parameters('LS_AzureDataLakeStorage_properties_typeProperties_url')]"
 					}
 				}
 			},
@@ -159,6 +159,26 @@
 			},
 			"dependsOn": [
 				"[resourceId('Microsoft.Resources/deployments', 'SashitestADF_ArmTemplate_2')]"
+			]
+		},
+		{
+			"name": "SashitestADF_ArmTemplate_4",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_4.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'SashitestADF_ArmTemplate_3')]"
 			]
 		}
 	]
