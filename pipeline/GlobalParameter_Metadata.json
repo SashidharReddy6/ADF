@@ -1,5 +1,5 @@
 {
-	"name": "GP_Metadata",
+	"name": "GlobalParameter_Metadata",
 	"properties": {
 		"activities": [
 			{
@@ -25,7 +25,9 @@
 							}
 						}
 					},
-					"fieldList": [],
+					"fieldList": [
+						"childItems"
+					],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
 						"enablePartitionDiscovery": false
