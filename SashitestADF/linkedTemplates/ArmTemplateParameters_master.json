@@ -5,6 +5,9 @@
 		"factoryName": {
 			"value": "SashitestADF"
 		},
+		"AzureBlobStorage1_connectionString": {
+			"value": ""
+		},
 		"AzureBlobStorage_LS_connectionString": {
 			"value": ""
 		},
