@@ -5,6 +5,10 @@
 			"RootPath": {
 				"type": "string",
 				"value": "input/surrogate_source"
+			},
+			"Container": {
+				"type": "string",
+				"value": "input"
 			}
 		}
 	},
