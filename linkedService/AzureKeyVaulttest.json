@@ -1,0 +1,10 @@
+{
+	"name": "AzureKeyVaulttest",
+	"properties": {
+		"annotations": [],
+		"type": "AzureKeyVault",
+		"typeProperties": {
+			"baseUrl": "https://testblob66.vault.azure.net/"
+		}
+	}
+}
