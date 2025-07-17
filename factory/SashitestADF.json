@@ -17,6 +17,10 @@
 			"sashi_test": {
 				"type": "string",
 				"value": "test"
+			},
+			"gmail": {
+				"type": "string",
+				"value": "sashi@gmail.com"
 			}
 		}
 	},
