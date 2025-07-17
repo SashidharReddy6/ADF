@@ -17,6 +17,9 @@
 		"SqlServer_LS_password": {
 			"value": ""
 		},
+		"LS_AzureDataLakeStorage_accountKey": {
+			"value": ""
+		},
 		"SqlServer_LS_properties_typeProperties_server": {
 			"value": "AAPL-L-872\\SQLEXPRESS"
 		},
@@ -25,6 +28,9 @@
 		},
 		"SqlServer_LS_properties_typeProperties_userName": {
 			"value": "SA"
+		},
+		"LS_AzureDataLakeStorage_properties_typeProperties_url": {
+			"value": "https://storage230620251.dfs.core.windows.net/"
 		}
 	}
 }
