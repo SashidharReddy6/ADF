@@ -20,7 +20,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"Rootpath": {
-								"value": "@pipeline().globalParameters.RootPath",
+								"value": "@pipeline().globalParameters.Container",
 								"type": "Expression"
 							}
 						}
@@ -30,6 +30,7 @@
 					],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
+						"recursive": true,
 						"enablePartitionDiscovery": false
 					},
 					"formatSettings": {
@@ -38,11 +39,6 @@
 				}
 			}
 		],
-		"parameters": {
-			"Rootpath": {
-				"type": "string"
-			}
-		},
 		"annotations": []
 	}
 }
