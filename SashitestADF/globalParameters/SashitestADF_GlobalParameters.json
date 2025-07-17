@@ -2,5 +2,13 @@
 	"RootPath": {
 		"type": "string",
 		"value": "input/surrogate_source"
+	},
+	"Container": {
+		"type": "string",
+		"value": "input"
+	},
+	"Directory": {
+		"type": "string",
+		"value": "surrogate_source"
 	}
 }

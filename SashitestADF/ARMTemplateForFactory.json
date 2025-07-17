@@ -528,7 +528,7 @@
 								"type": "DatasetReference",
 								"parameters": {
 									"Rootpath": {
-										"value": "@pipeline().globalParameters.RootPath",
+										"value": "@pipeline().globalParameters.Container",
 										"type": "Expression"
 									}
 								}
@@ -549,11 +549,6 @@
 				],
 				"policy": {
 					"elapsedTimeMetric": {}
-				},
-				"parameters": {
-					"Rootpath": {
-						"type": "string"
-					}
 				},
 				"annotations": []
 			},
@@ -4248,6 +4243,49 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/window_source')]",
 				"[concat(variables('factoryId'), '/datasets/window_output')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/test')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage_LS",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"Container": {
+						"type": "string"
+					},
+					"Directory": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "surrogate_source.csv",
+						"folderPath": {
+							"value": "@dataset().Directory",
+							"type": "Expression"
+						},
+						"container": {
+							"value": "@dataset().Container",
+							"type": "Expression"
+						}
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage_LS')]"
 			]
 		}
 	]
