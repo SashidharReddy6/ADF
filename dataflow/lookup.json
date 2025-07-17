@@ -21,6 +21,10 @@
 			],
 			"sinks": [
 				{
+					"dataset": {
+						"referenceName": "branch_output",
+						"type": "DatasetReference"
+					},
 					"name": "sink"
 				}
 			],
@@ -54,6 +58,14 @@
 				"     broadcast: 'auto')~> lookup",
 				"lookup sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
+				"     input(",
+				"          Movie_Name as string,",
+				"          {movie type} as string,",
+				"          view_count as string,",
+				"          like_count as string,",
+				"          comment_count as string,",
+				"          Gender as string",
+				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> sink"
 			]
