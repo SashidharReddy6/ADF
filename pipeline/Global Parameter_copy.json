@@ -49,15 +49,15 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "source_gp",
+						"referenceName": "test",
 						"type": "DatasetReference",
 						"parameters": {
-							"Filename": {
-								"value": "@pipeline().parameters.FileName",
+							"Container": {
+								"value": "@pipeline().globalParameters.Container",
 								"type": "Expression"
 							},
-							"Rootpath": {
-								"value": "@pipeline().globalParameters.RootPath",
+							"Directory": {
+								"value": "@pipeline().globalParameters.Directory",
 								"type": "Expression"
 							}
 						}
@@ -71,12 +71,6 @@
 				]
 			}
 		],
-		"parameters": {
-			"FileName": {
-				"type": "string",
-				"defaultValue": "surrogate_source"
-			}
-		},
 		"annotations": []
 	}
 }
