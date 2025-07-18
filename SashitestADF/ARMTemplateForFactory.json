@@ -42,6 +42,14 @@
 		"SqlServer_LS_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "SA"
+		},
+		"AzureKeyVaulttest_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://testblob66.vault.azure.net/"
+		},
+		"AzureBlobStorage3_properties_typeProperties_connectionString_secretName": {
+			"type": "string",
+			"defaultValue": "blobconnector"
 		}
 	},
 	"variables": {
@@ -465,15 +473,15 @@
 						},
 						"inputs": [
 							{
-								"referenceName": "source_gp",
+								"referenceName": "test",
 								"type": "DatasetReference",
 								"parameters": {
-									"Filename": {
-										"value": "@pipeline().parameters.FileName",
+									"Container": {
+										"value": "@pipeline().globalParameters.Container",
 										"type": "Expression"
 									},
-									"Rootpath": {
-										"value": "@pipeline().globalParameters.RootPath",
+									"Directory": {
+										"value": "@pipeline().globalParameters.Directory",
 										"type": "Expression"
 									}
 								}
@@ -491,16 +499,10 @@
 				"policy": {
 					"elapsedTimeMetric": {}
 				},
-				"parameters": {
-					"FileName": {
-						"type": "string",
-						"defaultValue": "surrogate_source"
-					}
-				},
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/source_gp')]",
+				"[concat(variables('factoryId'), '/datasets/test')]",
 				"[concat(variables('factoryId'), '/datasets/target')]"
 			]
 		},
@@ -4315,6 +4317,86 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage_LS')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DelimitedText1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage_LS",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"folderPath": "pivot",
+						"container": "input"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "empid",
+						"type": "String"
+					},
+					{
+						"name": "name",
+						"type": "String"
+					},
+					{
+						"name": "gender",
+						"type": "String"
+					},
+					{
+						"name": "dept",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage_LS')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureKeyVaulttest')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureKeyVault",
+				"typeProperties": {
+					"baseUrl": "[parameters('AzureKeyVaulttest_properties_typeProperties_baseUrl')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureBlobStorage3')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": {
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "AzureKeyVaulttest",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "[parameters('AzureBlobStorage3_properties_typeProperties_connectionString_secretName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureKeyVaulttest')]"
 			]
 		}
 	]

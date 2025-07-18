@@ -32,6 +32,12 @@
 		"SqlServer_LS_properties_typeProperties_userName": {
 			"value": "SA"
 		},
+		"AzureKeyVaulttest_properties_typeProperties_baseUrl": {
+			"value": "https://testblob66.vault.azure.net/"
+		},
+		"AzureBlobStorage3_properties_typeProperties_connectionString_secretName": {
+			"value": "blobconnector"
+		},
 		"containerUri": {
 			"value": ""
 		},
