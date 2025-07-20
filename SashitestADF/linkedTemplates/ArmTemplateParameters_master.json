@@ -17,11 +17,29 @@
 		"LS_AzureDataLakeStorage_accountKey": {
 			"value": ""
 		},
+		"LS_Azure_SQL_DB_password": {
+			"value": ""
+		},
 		"SqlServer_LS_password": {
 			"value": ""
 		},
+		"AzureBlobStorage3_properties_typeProperties_connectionString_secretName": {
+			"value": "blobconnector"
+		},
+		"AzureKeyVaulttest_properties_typeProperties_baseUrl": {
+			"value": "https://testblob66.vault.azure.net/"
+		},
 		"LS_AzureDataLakeStorage_properties_typeProperties_url": {
 			"value": "https://storage230620251.dfs.core.windows.net/"
+		},
+		"LS_Azure_SQL_DB_properties_typeProperties_server": {
+			"value": "demodbserver6.database.windows.net"
+		},
+		"LS_Azure_SQL_DB_properties_typeProperties_database": {
+			"value": "DEMO_DB"
+		},
+		"LS_Azure_SQL_DB_properties_typeProperties_userName": {
+			"value": "sashidhar"
 		},
 		"SqlServer_LS_properties_typeProperties_server": {
 			"value": "AAPL-L-872\\SQLEXPRESS"
@@ -31,12 +49,6 @@
 		},
 		"SqlServer_LS_properties_typeProperties_userName": {
 			"value": "SA"
-		},
-		"AzureKeyVaulttest_properties_typeProperties_baseUrl": {
-			"value": "https://testblob66.vault.azure.net/"
-		},
-		"AzureBlobStorage3_properties_typeProperties_connectionString_secretName": {
-			"value": "blobconnector"
 		},
 		"containerUri": {
 			"value": ""
