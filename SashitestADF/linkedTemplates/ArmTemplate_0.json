@@ -337,6 +337,51 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/input_flowlet')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "Flowlet",
+				"typeProperties": {
+					"sources": [],
+					"sinks": [],
+					"transformations": [
+						{
+							"name": "aggregate1"
+						},
+						{
+							"name": "select1"
+						},
+						{
+							"name": "input1"
+						},
+						{
+							"name": "output1"
+						}
+					],
+					"scriptLines": [
+						"input(output(",
+						"          OrderID as string,",
+						"          CustomerID as string,",
+						"          Amount as string,",
+						"          OrderDate as string",
+						"     ),",
+						"     order: 0,",
+						"     allowSchemaDrift: true) ~> input1",
+						"input1 aggregate(groupBy(CustomerID),",
+						"     count = count()) ~> aggregate1",
+						"aggregate1 select(mapColumn(",
+						"          CustomerID",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> select1",
+						"select1 output() ~> output1"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/AzureSql_customer')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -581,37 +626,6 @@
 						"type": "AzureBlobStorageLocation",
 						"folderPath": {
 							"value": "@dataset().Foldername",
-							"type": "Expression"
-						},
-						"container": "output"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage_LS')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Binaryoutput2')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureBlobStorage_LS",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"outputfolder": {
-						"type": "string"
-					}
-				},
-				"annotations": [],
-				"type": "Binary",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"folderPath": {
-							"value": "@dataset().outputfolder",
 							"type": "Expression"
 						},
 						"container": "output"
