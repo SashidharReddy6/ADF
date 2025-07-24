@@ -21,6 +21,17 @@
 				"typeProperties": {
 					"scripts": [
 						{
+							"parameters": [
+								{
+									"name": "Column name",
+									"type": "String",
+									"value": {
+										"value": "@pipeline().parameters.Column_name",
+										"type": "Expression"
+									},
+									"direction": "Input"
+								}
+							],
 							"type": "Query",
 							"text": "select * from parse_employee\n\nPRINT 'this is table data'"
 						}
@@ -39,6 +50,11 @@
 				}
 			}
 		],
+		"parameters": {
+			"Column_name": {
+				"type": "string"
+			}
+		},
 		"annotations": []
 	}
 }
