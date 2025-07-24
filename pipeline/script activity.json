@@ -23,17 +23,14 @@
 						{
 							"parameters": [
 								{
-									"name": "tablename",
+									"name": "employee_name ",
 									"type": "String",
-									"value": {
-										"value": "@pipeline().parameters.tablename",
-										"type": "Expression"
-									},
+									"value": "sashidhar reddy",
 									"direction": "Input"
 								}
 							],
 							"type": "Query",
-							"text": "select * from @tablename\n\nPRINT 'this is table data'"
+							"text": "select @employee_name as myname\n\nPRINT 'this is table data'"
 						}
 					],
 					"scriptBlockExecutionTimeout": "02:00:00",
@@ -50,11 +47,6 @@
 				}
 			}
 		],
-		"parameters": {
-			"tablename": {
-				"type": "string"
-			}
-		},
 		"annotations": []
 	}
 }
