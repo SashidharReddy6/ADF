@@ -1,0 +1,37 @@
+{
+	"name": "table_2",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage_LS",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "customers_2.csv",
+				"folderPath": "Fuzzy",
+				"container": "input"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "CustomerRef",
+				"type": "String"
+			},
+			{
+				"name": "FullName",
+				"type": "String"
+			},
+			{
+				"name": "Country",
+				"type": "String"
+			}
+		]
+	}
+}
