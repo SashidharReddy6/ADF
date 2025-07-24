@@ -1,0 +1,19 @@
+{
+	"name": "UDF1",
+	"properties": {
+		"type": "UDFLibrary",
+		"typeProperties": {
+			"sources": [],
+			"sinks": [],
+			"transformations": [],
+			"scriptLines": [
+				"department_UDF(string) as integer = iif(i1== 'HR', toInteger(1),",
+				"    iif(i1== 'Finance', toInteger(2),",
+				"        iif( i1== 'BI', toInteger(3), toInteger(-1))",
+				"    )",
+				")",
+				""
+			]
+		}
+	}
+}
