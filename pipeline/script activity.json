@@ -23,14 +23,14 @@
 						{
 							"parameters": [
 								{
-									"name": "employee_name ",
+									"name": "sample_name ",
 									"type": "String",
 									"value": "sashidhar reddy",
 									"direction": "Input"
 								}
 							],
 							"type": "Query",
-							"text": "select @employee_name as myname\n\nPRINT 'this is table data'"
+							"text": "select @sample_name as myname\n\nPRINT 'this is table data'"
 						}
 					],
 					"scriptBlockExecutionTimeout": "02:00:00",
