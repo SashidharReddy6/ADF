@@ -1,0 +1,53 @@
+{
+	"name": "cast_source",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage_LS",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "cast_test_data.csv",
+				"folderPath": "cast",
+				"container": "input"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "employee_id",
+				"type": "String"
+			},
+			{
+				"name": "full_name",
+				"type": "String"
+			},
+			{
+				"name": "doj",
+				"type": "String"
+			},
+			{
+				"name": "department_id",
+				"type": "String"
+			},
+			{
+				"name": "salary",
+				"type": "String"
+			},
+			{
+				"name": "is_manager",
+				"type": "String"
+			},
+			{
+				"name": "bonus_percent",
+				"type": "String"
+			}
+		]
+	}
+}

@@ -3,11 +3,44 @@
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
-			"sources": [],
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "cast_source",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
 			"sinks": [],
-			"transformations": [],
+			"transformations": [
+				{
+					"name": "cast1"
+				}
+			],
 			"scriptLines": [
-				""
+				"source(output(",
+				"          employee_id as string,",
+				"          full_name as string,",
+				"          doj as string,",
+				"          department_id as string,",
+				"          salary as string,",
+				"          is_manager as string,",
+				"          bonus_percent as string",
+				"     ),",
+				"     allowSchemaDrift: false,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source1 cast(output(",
+				"          employee_id as integer,",
+				"          full_name as string,",
+				"          doj as date,",
+				"          department_id as integer,",
+				"          salary as double,",
+				"          is_manager as boolean,",
+				"          bonus_percent as float",
+				"     ),",
+				"     errors: false) ~> cast1"
 			]
 		}
 	}
