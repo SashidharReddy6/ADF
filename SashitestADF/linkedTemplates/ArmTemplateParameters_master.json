@@ -50,6 +50,15 @@
 		"SqlServer_LS_properties_typeProperties_userName": {
 			"value": "SA"
 		},
+		"Parameterised_LS_properties_typeProperties_server": {
+			"value": "demodbserver6.database.windows.net"
+		},
+		"Parameterised_LS_properties_typeProperties_database": {
+			"value": "DEMO_DB"
+		},
+		"Parameterised_LS_properties_typeProperties_userName": {
+			"value": "@{linkedService().Username1}"
+		},
 		"containerUri": {
 			"value": ""
 		},
