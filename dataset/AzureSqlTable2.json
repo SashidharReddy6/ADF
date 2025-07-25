@@ -3,7 +3,25 @@
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "Parameterised_LS",
-			"type": "LinkedServiceReference"
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"Username1": {
+					"value": "@dataset().username",
+					"type": "Expression"
+				},
+				"password1": {
+					"value": "@dataset().password",
+					"type": "Expression"
+				}
+			}
+		},
+		"parameters": {
+			"username": {
+				"type": "string"
+			},
+			"password": {
+				"type": "string"
+			}
 		},
 		"annotations": [],
 		"type": "AzureSqlTable",
