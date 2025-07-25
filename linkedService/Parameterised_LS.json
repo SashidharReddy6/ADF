@@ -1,0 +1,25 @@
+{
+	"name": "Parameterised_LS",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"parameters": {
+			"Username1": {
+				"type": "string"
+			},
+			"password1": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"server": "demodbserver6.database.windows.net",
+			"database": "DEMO_DB",
+			"encrypt": "mandatory",
+			"trustServerCertificate": false,
+			"authenticationType": "SQL",
+			"userName": "@{linkedService().Username1}",
+			"password": "@{linkedService().password1}"
+		}
+	}
+}
