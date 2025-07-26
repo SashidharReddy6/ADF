@@ -46,7 +46,7 @@
 						{
 							"type": "Query",
 							"text": {
-								"value": "insert into discovery values ('',''",
+								"value": "insert into discovery values (@activity('Execute Pipeline1').output.properties.returnValue)",
 								"type": "Expression"
 							}
 						}
