@@ -20,6 +20,9 @@
 		"LS_Azure_SQL_DB_password": {
 			"value": ""
 		},
+		"Para_LS_connectionString": {
+			"value": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=demodbserver6.database.windows.net;Initial Catalog=DEMO_DB;User ID=@{linkedService().USER1};Password=@{linkedService().PASS1}"
+		},
 		"SqlServer_LS_password": {
 			"value": ""
 		},
@@ -41,15 +44,6 @@
 		"LS_Azure_SQL_DB_properties_typeProperties_userName": {
 			"value": "sashidhar"
 		},
-		"SqlServer_LS_properties_typeProperties_server": {
-			"value": "AAPL-L-872\\SQLEXPRESS"
-		},
-		"SqlServer_LS_properties_typeProperties_database": {
-			"value": "AFFINE"
-		},
-		"SqlServer_LS_properties_typeProperties_userName": {
-			"value": "SA"
-		},
 		"Parameterised_LS_properties_typeProperties_server": {
 			"value": "demodbserver6.database.windows.net"
 		},
@@ -58,6 +52,18 @@
 		},
 		"Parameterised_LS_properties_typeProperties_userName": {
 			"value": "@{linkedService().Username1}"
+		},
+		"SelfhostedIR_LS_properties_typeProperties_url": {
+			"value": "https://www.careerpower.in/states-and-capitals-of-india.html"
+		},
+		"SqlServer_LS_properties_typeProperties_server": {
+			"value": "AAPL-L-872\\SQLEXPRESS"
+		},
+		"SqlServer_LS_properties_typeProperties_database": {
+			"value": "AFFINE"
+		},
+		"SqlServer_LS_properties_typeProperties_userName": {
+			"value": "SA"
 		},
 		"containerUri": {
 			"value": ""

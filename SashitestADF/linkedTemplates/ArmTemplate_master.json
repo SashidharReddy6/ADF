@@ -27,6 +27,11 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'LS_Azure_SQL_DB'"
 		},
+		"Para_LS_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'Para_LS'",
+			"defaultValue": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=demodbserver6.database.windows.net;Initial Catalog=DEMO_DB;User ID=@{linkedService().USER1};Password=@{linkedService().PASS1}"
+		},
 		"SqlServer_LS_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'SqlServer_LS'"
@@ -55,18 +60,6 @@
 			"type": "string",
 			"defaultValue": "sashidhar"
 		},
-		"SqlServer_LS_properties_typeProperties_server": {
-			"type": "string",
-			"defaultValue": "AAPL-L-872\\SQLEXPRESS"
-		},
-		"SqlServer_LS_properties_typeProperties_database": {
-			"type": "string",
-			"defaultValue": "AFFINE"
-		},
-		"SqlServer_LS_properties_typeProperties_userName": {
-			"type": "string",
-			"defaultValue": "SA"
-		},
 		"Parameterised_LS_properties_typeProperties_server": {
 			"type": "string",
 			"defaultValue": "demodbserver6.database.windows.net"
@@ -78,6 +71,22 @@
 		"Parameterised_LS_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "@{linkedService().Username1}"
+		},
+		"SelfhostedIR_LS_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://www.careerpower.in/states-and-capitals-of-india.html"
+		},
+		"SqlServer_LS_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "AAPL-L-872\\SQLEXPRESS"
+		},
+		"SqlServer_LS_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "AFFINE"
+		},
+		"SqlServer_LS_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "SA"
 		},
 		"containerUri": {
 			"type": "string",
@@ -121,6 +130,9 @@
 					"LS_Azure_SQL_DB_password": {
 						"value": "[parameters('LS_Azure_SQL_DB_password')]"
 					},
+					"Para_LS_connectionString": {
+						"value": "[parameters('Para_LS_connectionString')]"
+					},
 					"SqlServer_LS_password": {
 						"value": "[parameters('SqlServer_LS_password')]"
 					},
@@ -139,15 +151,6 @@
 					"LS_Azure_SQL_DB_properties_typeProperties_userName": {
 						"value": "[parameters('LS_Azure_SQL_DB_properties_typeProperties_userName')]"
 					},
-					"SqlServer_LS_properties_typeProperties_server": {
-						"value": "[parameters('SqlServer_LS_properties_typeProperties_server')]"
-					},
-					"SqlServer_LS_properties_typeProperties_database": {
-						"value": "[parameters('SqlServer_LS_properties_typeProperties_database')]"
-					},
-					"SqlServer_LS_properties_typeProperties_userName": {
-						"value": "[parameters('SqlServer_LS_properties_typeProperties_userName')]"
-					},
 					"Parameterised_LS_properties_typeProperties_server": {
 						"value": "[parameters('Parameterised_LS_properties_typeProperties_server')]"
 					},
@@ -156,6 +159,15 @@
 					},
 					"Parameterised_LS_properties_typeProperties_userName": {
 						"value": "[parameters('Parameterised_LS_properties_typeProperties_userName')]"
+					},
+					"SqlServer_LS_properties_typeProperties_server": {
+						"value": "[parameters('SqlServer_LS_properties_typeProperties_server')]"
+					},
+					"SqlServer_LS_properties_typeProperties_database": {
+						"value": "[parameters('SqlServer_LS_properties_typeProperties_database')]"
+					},
+					"SqlServer_LS_properties_typeProperties_userName": {
+						"value": "[parameters('SqlServer_LS_properties_typeProperties_userName')]"
 					}
 				}
 			},
@@ -237,6 +249,9 @@
 					},
 					"AzureBlobStorage3_properties_typeProperties_connectionString_secretName": {
 						"value": "[parameters('AzureBlobStorage3_properties_typeProperties_connectionString_secretName')]"
+					},
+					"SelfhostedIR_LS_properties_typeProperties_url": {
+						"value": "[parameters('SelfhostedIR_LS_properties_typeProperties_url')]"
 					}
 				}
 			},
@@ -282,6 +297,26 @@
 			},
 			"dependsOn": [
 				"[resourceId('Microsoft.Resources/deployments', 'SashitestADF_ArmTemplate_5')]"
+			]
+		},
+		{
+			"name": "SashitestADF_ArmTemplate_7",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_7.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'SashitestADF_ArmTemplate_6')]"
 			]
 		}
 	]
