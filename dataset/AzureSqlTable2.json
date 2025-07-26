@@ -2,14 +2,14 @@
 	"name": "AzureSqlTable2",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "Parameterised_LS",
+			"referenceName": "Para_LS",
 			"type": "LinkedServiceReference",
 			"parameters": {
-				"Username1": {
+				"USER1": {
 					"value": "@dataset().username",
 					"type": "Expression"
 				},
-				"password1": {
+				"PASS1": {
 					"value": "@dataset().password",
 					"type": "Expression"
 				}

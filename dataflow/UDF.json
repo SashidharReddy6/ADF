@@ -26,6 +26,12 @@
 					"name": "derivedColumn1"
 				}
 			],
+			"udfLibraries": [
+				{
+					"referenceName": "UDF1",
+					"type": "DataFlowReference"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
 				"          name as string,",
@@ -36,11 +42,8 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> source1",
-				"source1 derive(department = iif(department == 'HR', toInteger(1),\r",
-				"    iif(department == 'Finance', toInteger(2),\r",
-				"        iif(department == 'BI', toInteger(3), toInteger(-1))\r",
-				"    )\r",
-				")) ~> derivedColumn1",
+				"source1 derive(department = department_UDF(department),",
+				"          department_decoded = toString(department)) ~> derivedColumn1",
 				"derivedColumn1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
