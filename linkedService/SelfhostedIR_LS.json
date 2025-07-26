@@ -4,7 +4,7 @@
 		"annotations": [],
 		"type": "Web",
 		"typeProperties": {
-			"url": "https://www.worldometers.info/coronavirus/",
+			"url": "https://geographyfieldwork.com/WorldCapitalCities.htm",
 			"authenticationType": "Anonymous"
 		},
 		"connectVia": {
