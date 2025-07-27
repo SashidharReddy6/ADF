@@ -53,6 +53,9 @@
 		"Parameterised_LS_properties_typeProperties_userName": {
 			"value": "@{linkedService().Username1}"
 		},
+		"RestService_LS_properties_typeProperties_url": {
+			"value": "https://pokeapi.co/api/v2/pokemon"
+		},
 		"SelfhostedIR_LS_properties_typeProperties_url": {
 			"value": "https://www.careerpower.in/states-and-capitals-of-india.html"
 		},
@@ -64,9 +67,6 @@
 		},
 		"SqlServer_LS_properties_typeProperties_userName": {
 			"value": "SA"
-		},
-		"RestService_LS_properties_typeProperties_url": {
-			"value": "https://pokeapi.co/api/v2/pokemon"
 		},
 		"containerUri": {
 			"value": ""

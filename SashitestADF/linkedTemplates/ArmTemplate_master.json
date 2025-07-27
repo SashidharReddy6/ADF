@@ -72,6 +72,10 @@
 			"type": "string",
 			"defaultValue": "@{linkedService().Username1}"
 		},
+		"RestService_LS_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://pokeapi.co/api/v2/pokemon"
+		},
 		"SelfhostedIR_LS_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://www.careerpower.in/states-and-capitals-of-india.html"
@@ -87,10 +91,6 @@
 		"SqlServer_LS_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "SA"
-		},
-		"RestService_LS_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://pokeapi.co/api/v2/pokemon"
 		},
 		"containerUri": {
 			"type": "string",
@@ -164,6 +164,9 @@
 					"Parameterised_LS_properties_typeProperties_userName": {
 						"value": "[parameters('Parameterised_LS_properties_typeProperties_userName')]"
 					},
+					"RestService_LS_properties_typeProperties_url": {
+						"value": "[parameters('RestService_LS_properties_typeProperties_url')]"
+					},
 					"SqlServer_LS_properties_typeProperties_server": {
 						"value": "[parameters('SqlServer_LS_properties_typeProperties_server')]"
 					},
@@ -172,9 +175,6 @@
 					},
 					"SqlServer_LS_properties_typeProperties_userName": {
 						"value": "[parameters('SqlServer_LS_properties_typeProperties_userName')]"
-					},
-					"RestService_LS_properties_typeProperties_url": {
-						"value": "[parameters('RestService_LS_properties_typeProperties_url')]"
 					}
 				}
 			},
@@ -253,12 +253,6 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
-					},
-					"AzureBlobStorage3_properties_typeProperties_connectionString_secretName": {
-						"value": "[parameters('AzureBlobStorage3_properties_typeProperties_connectionString_secretName')]"
-					},
-					"SelfhostedIR_LS_properties_typeProperties_url": {
-						"value": "[parameters('SelfhostedIR_LS_properties_typeProperties_url')]"
 					}
 				}
 			},
@@ -279,6 +273,9 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"AzureBlobStorage3_properties_typeProperties_connectionString_secretName": {
+						"value": "[parameters('AzureBlobStorage3_properties_typeProperties_connectionString_secretName')]"
 					}
 				}
 			},
@@ -299,6 +296,9 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"SelfhostedIR_LS_properties_typeProperties_url": {
+						"value": "[parameters('SelfhostedIR_LS_properties_typeProperties_url')]"
 					}
 				}
 			},

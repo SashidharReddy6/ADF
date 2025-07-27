@@ -68,6 +68,10 @@
 			"type": "string",
 			"defaultValue": "@{linkedService().Username1}"
 		},
+		"RestService_LS_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://pokeapi.co/api/v2/pokemon"
+		},
 		"SqlServer_LS_properties_typeProperties_server": {
 			"type": "string",
 			"defaultValue": "AAPL-L-872\\SQLEXPRESS"
@@ -79,10 +83,6 @@
 		"SqlServer_LS_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "SA"
-		},
-		"RestService_LS_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://pokeapi.co/api/v2/pokemon"
 		}
 	},
 	"variables": {
@@ -384,6 +384,21 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/RestService_LS')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "RestService",
+				"typeProperties": {
+					"url": "[parameters('RestService_LS_properties_typeProperties_url')]",
+					"enableServerCertificateValidation": true,
+					"authenticationType": "Anonymous"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/SqlServer_LS')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -477,21 +492,6 @@
 						"     skipDuplicateMapOutputs: true) ~> select1",
 						"select1 output() ~> output1"
 					]
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/RestService_LS')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "RestService",
-				"typeProperties": {
-					"url": "[parameters('RestService_LS_properties_typeProperties_url')]",
-					"enableServerCertificateValidation": true,
-					"authenticationType": "Anonymous"
 				}
 			},
 			"dependsOn": []
