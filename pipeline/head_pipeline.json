@@ -46,7 +46,7 @@
 						{
 							"type": "Query",
 							"text": {
-								"value": "INSERT INTO logs (activity_name, run_id)\nVALUES ('@{activity('copy_return_variable').output.pipelineName}', '@{activity('copy_return_variable').output.runId}')\n",
+								"value": "INSERT INTO logs (activity_name, run_id, return_value)\nVALUES ('@{activity('copy_return_variable').output.pipelineName}', '@{activity('copy_return_variable').output.pipelineRunId}', '@{activity('copy_return_variable').output.pipelineReturnValue}')\n",
 								"type": "Expression"
 							}
 						}
