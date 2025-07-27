@@ -1,0 +1,66 @@
+{
+	"name": "fixed_length_fix",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "fixed_length_source",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "fixed_length_output",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "select1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          {1001RAHUL       TN8823456789HR   050000} as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source1 derive(ID = substring({1001RAHUL       TN8823456789HR   050000},0,4),",
+				"          Name = substring({1001RAHUL       TN8823456789HR   050000},5,12),",
+				"          State = substring({1001RAHUL       TN8823456789HR   050000},17,2),",
+				"          IDnumber = substring({1001RAHUL       TN8823456789HR   050000},19,10),",
+				"          Dept = substring({1001RAHUL       TN8823456789HR   050000},29,5),",
+				"          Salary = substring({1001RAHUL       TN8823456789HR   050000},35,6)) ~> derivedColumn1",
+				"derivedColumn1 select(mapColumn(",
+				"          ID,",
+				"          Name,",
+				"          State,",
+				"          IDnumber,",
+				"          Dept,",
+				"          Salary",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          {Union Territories Name} as string,",
+				"          Capital as string",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
+			]
+		}
+	}
+}

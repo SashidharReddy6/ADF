@@ -1,0 +1,29 @@
+{
+	"name": "fixed_length_source",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage_LS",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "fixed_length_source.txt",
+				"folderPath": "fixed_length_source",
+				"container": "input"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": false,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "1001RAHUL       TN8823456789HR   050000",
+				"type": "String"
+			}
+		]
+	}
+}
