@@ -69,7 +69,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
-						"value": "@equals(variables('Count_of_files'),32 )",
+						"value": "@equals(variables('Count_of_files'),'32' )",
 						"type": "Expression"
 					},
 					"ifTrueActivities": [
