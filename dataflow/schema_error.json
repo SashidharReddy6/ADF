@@ -12,7 +12,22 @@
 					"name": "source1"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DelimitedText12",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				},
+				{
+					"dataset": {
+						"referenceName": "DelimitedText13",
+						"type": "DatasetReference"
+					},
+					"name": "sink2"
+				}
+			],
 			"transformations": [
 				{
 					"name": "derivedColumn1"
@@ -34,8 +49,24 @@
 				"source1 derive(Name_len = length(toString(Name)),",
 				"          City_len = length(toString(City)),",
 				"          Country_len = length(toString(Country))) ~> derivedColumn1",
-				"derivedColumn1 split(toInteger(Name_len) <= 20,",
-				"     disjoint: false) ~> split1@(valid, invalid)"
+				"derivedColumn1 split(toInteger(Name_len) <= 20 && toInteger(City_len) <= 11 && toInteger(Country_len) <= 10,",
+				"     disjoint: false) ~> split1@(validnames, invalid)",
+				"split1@validnames sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          {Union Territories Name} as string,",
+				"          Capital as string",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1",
+				"split1@invalid sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          {Union Territories Name} as string,",
+				"          Capital as string",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink2"
 			]
 		}
 	}
