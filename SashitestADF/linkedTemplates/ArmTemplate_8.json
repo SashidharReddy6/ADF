@@ -13,6 +13,425 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/asset')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "asset_source",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "DelimitedText4",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "assert1"
+						},
+						{
+							"name": "derivedColumn1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          empid as string,",
+						"          name as string,",
+						"          dept as string,",
+						"          doj as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> source1",
+						"source1 assert(expectTrue(!isNull(toDate(doj, 'dd-mm-yyyy')), false, 'doj', null, \"date of joining\"),",
+						"     expectUnique(empid, false, 'id', null, \"id of emp\")) ~> assert1",
+						"assert1 derive(Iserrorrow = isError()) ~> derivedColumn1",
+						"derivedColumn1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          id as string,",
+						"          name as string,",
+						"          gender as string,",
+						"          country as string,",
+						"          age as string",
+						"     ),",
+						"     partitionFileNames:['assert_output'],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     partitionBy('hash', 1)) ~> sink1"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/branch_dataflow')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "employee1",
+								"type": "DatasetReference"
+							},
+							"name": "employee1"
+						},
+						{
+							"dataset": {
+								"referenceName": "department_1",
+								"type": "DatasetReference"
+							},
+							"name": "department1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "branch_output",
+								"type": "DatasetReference"
+							},
+							"name": "sink"
+						},
+						{
+							"dataset": {
+								"referenceName": "innerjoin",
+								"type": "DatasetReference"
+							},
+							"name": "sink2"
+						}
+					],
+					"transformations": [
+						{
+							"name": "aggregate"
+						},
+						{
+							"name": "join1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          empid as string,",
+						"          name as string,",
+						"          country as string,",
+						"          dept as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> employee1",
+						"source(output(",
+						"          deptid as string,",
+						"          dept as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> department1",
+						"employee1 aggregate(groupBy(dept),",
+						"     empid = count(empid)) ~> aggregate",
+						"employee1, department1 join(employee1@dept == department1@dept,",
+						"     joinType:'inner',",
+						"     matchType:'exact',",
+						"     ignoreSpaces: false,",
+						"     broadcast: 'auto')~> join1",
+						"aggregate sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          Movie_Name as string,",
+						"          {movie type} as string,",
+						"          view_count as string,",
+						"          like_count as string,",
+						"          comment_count as string,",
+						"          Gender as string",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> sink",
+						"join1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          Movie_Name as string,",
+						"          {movie type} as string,",
+						"          view_count as string,",
+						"          like_count as string,",
+						"          comment_count as string,",
+						"          Gender as string",
+						"     ),",
+						"     partitionFileNames:['innerjoin'],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     partitionBy('hash', 1)) ~> sink2"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/cast')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "cast_source",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "DelimitedText6",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "cast1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          employee_id as string,",
+						"          full_name as string,",
+						"          doj as string,",
+						"          department_id as string,",
+						"          salary as string,",
+						"          is_manager as string,",
+						"          bonus_percent as string",
+						"     ),",
+						"     allowSchemaDrift: false,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> source1",
+						"source1 cast(output(",
+						"          employee_id as integer,",
+						"          full_name as string,",
+						"          doj as date,",
+						"          department_id as integer,",
+						"          salary as double,",
+						"          is_manager as boolean,",
+						"          bonus_percent as float",
+						"     ),",
+						"     errors: false) ~> cast1",
+						"cast1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          id as string,",
+						"          name as string,",
+						"          gender as string,",
+						"          country as string,",
+						"          age as string",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> sink1"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/customer_flowlet')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "duplicatecustomers",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "cust_flowlet_output",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "flowlet1",
+							"flowlet": {
+								"referenceName": "input_flowlet",
+								"type": "DataFlowReference",
+								"parameters": {}
+							}
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          OrderID as string,",
+						"          CustomerID as string,",
+						"          Amount as string,",
+						"          OrderDate as string",
+						"     ),",
+						"     allowSchemaDrift: false,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> source1",
+						"source1 compose(mapColumn(",
+						"          OrderID,",
+						"          CustomerID,",
+						"          Amount,",
+						"          OrderDate",
+						"     ),",
+						"     composition: 'input_flowlet') ~> flowlet1@(output1)",
+						"flowlet1@output1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          id as string,",
+						"          name as string,",
+						"          gender as string,",
+						"          country as string,",
+						"          age as string",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> sink1"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/derived_column1')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "emplyoyee_derived",
+								"type": "DatasetReference"
+							},
+							"name": "source"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "derived_output1",
+								"type": "DatasetReference"
+							},
+							"name": "sink"
+						}
+					],
+					"transformations": [
+						{
+							"name": "derivedColumn"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          empid as string,",
+						"          name as string,",
+						"          country as string,",
+						"          dept as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> source",
+						"source derive(name = upper(name)) ~> derivedColumn",
+						"derivedColumn sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          Movie_Name as string,",
+						"          {movie type} as string,",
+						"          view_count as string,",
+						"          like_count as string,",
+						"          comment_count as string,",
+						"          Gender as string",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> sink"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/duplicates_customer')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "duplicatecustomers",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "output6",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "aggregate1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          OrderID as string,",
+						"          CustomerID as string,",
+						"          Amount as string,",
+						"          OrderDate as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> source1",
+						"source1 aggregate(groupBy(CustomerID),",
+						"     count = count()) ~> aggregate1",
+						"aggregate1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          id as string,",
+						"          name as string,",
+						"          gender as string,",
+						"          country as string,",
+						"          age as string",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> sink1"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/fixed_length_fix')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
@@ -605,6 +1024,81 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/scd_type1')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "scd1_sourcee",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "scd1_outputt",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "alterRow1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          CustomerID as integer,",
+						"          FirstName as string,",
+						"          LastName as string,",
+						"          City as string,",
+						"          Country as string,",
+						"          UpdatedDate as date",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> source1",
+						"source1 alterRow(upsertIf(1==1)) ~> alterRow1",
+						"alterRow1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          CustomerID as integer,",
+						"          FirstName as string,",
+						"          LastName as string,",
+						"          City as string,",
+						"          Country as string,",
+						"          UpdatedDate as date",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:false,",
+						"     updateable:false,",
+						"     upsertable:true,",
+						"     keys:['CustomerID'],",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError',",
+						"     mapColumn(",
+						"          CustomerID,",
+						"          FirstName,",
+						"          LastName,",
+						"          City,",
+						"          Country,",
+						"          UpdatedDate",
+						"     )) ~> sink1"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/scenario1')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
@@ -666,13 +1160,13 @@
 						"     ignoreNoFilesFound: false) ~> source1",
 						"source1 split(isNull(toDate(doj, 'yyyy-mm-dd')),",
 						"     isInteger(department_id),",
-						"     disjoint: true) ~> split1@(ErrorRows, ErrorRows2, Goodrows)",
+						"     disjoint: true) ~> split1@(ErrorRows, Correctdepartments, Goodrows)",
 						"split1@Goodrows derive(Recordtype = \"TableA\") ~> derivedColumn1",
 						"split1@ErrorRows sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> sink1",
-						"split1@ErrorRows2 sink(allowSchemaDrift: true,",
+						"split1@Correctdepartments sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> sink2",
@@ -884,583 +1378,6 @@
 						"     )) ~> sink"
 					]
 				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/surrogate')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "surrogate_source",
-								"type": "DatasetReference"
-							},
-							"name": "source"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "surrogate",
-								"type": "DatasetReference"
-							},
-							"name": "sink"
-						}
-					],
-					"transformations": [
-						{
-							"name": "surrogateKey"
-						},
-						{
-							"name": "select"
-						}
-					],
-					"scriptLines": [
-						"source(output(",
-						"          name as string,",
-						"          gender as string,",
-						"          country as string,",
-						"          department as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     ignoreNoFilesFound: false) ~> source",
-						"source keyGenerate(output(Empid as long),",
-						"     startAt: 100L,",
-						"     stepValue: 10L) ~> surrogateKey",
-						"surrogateKey select(mapColumn(",
-						"          Empid,",
-						"          fullname = name,",
-						"          gender,",
-						"          country,",
-						"          department",
-						"     ),",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> select",
-						"select sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          Movie_Name as string,",
-						"          {movie type} as string,",
-						"          view_count as string,",
-						"          like_count as string,",
-						"          comment_count as string,",
-						"          Gender as string",
-						"     ),",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> sink"
-					]
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/window')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "window_source",
-								"type": "DatasetReference"
-							},
-							"name": "source"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "window_output",
-								"type": "DatasetReference"
-							},
-							"name": "sink1"
-						}
-					],
-					"transformations": [
-						{
-							"name": "window"
-						}
-					],
-					"scriptLines": [
-						"source(output(",
-						"          id as short,",
-						"          name as string,",
-						"          gender as string,",
-						"          country as string,",
-						"          department as string,",
-						"          salary as integer",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     ignoreNoFilesFound: false) ~> source",
-						"source window(over(department),",
-						"     asc(salary, true),",
-						"     Denserank = denseRank()) ~> window",
-						"window sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          empid as string,",
-						"          name as string,",
-						"          country as string,",
-						"          dept as string,",
-						"          Country_new as string",
-						"     ),",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> sink1"
-					]
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/copy_activity_addi_cols')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Copy data1",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "DelimitedTextSource",
-								"additionalColumns": [
-									{
-										"name": "Sourcefile_name",
-										"value": "$$FILEPATH"
-									},
-									{
-										"name": "PipelineName",
-										"value": {
-											"value": "@pipeline().Pipeline",
-											"type": "Expression"
-										}
-									}
-								],
-								"storeSettings": {
-									"type": "AzureBlobStorageReadSettings",
-									"recursive": true,
-									"enablePartitionDiscovery": false
-								},
-								"formatSettings": {
-									"type": "DelimitedTextReadSettings"
-								}
-							},
-							"sink": {
-								"type": "DelimitedTextSink",
-								"storeSettings": {
-									"type": "AzureBlobStorageWriteSettings"
-								},
-								"formatSettings": {
-									"type": "DelimitedTextWriteSettings",
-									"quoteAllText": true,
-									"fileExtension": ".csv"
-								}
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"name": "OrderID",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "OrderID",
-											"type": "String",
-											"physicalType": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "CustomerID",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "CustomerID",
-											"type": "String",
-											"physicalType": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Amount",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Amount",
-											"type": "String",
-											"physicalType": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "OrderDate",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "OrderDate",
-											"type": "String",
-											"physicalType": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Sourcefile_name",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Sourcefile_name",
-											"type": "String",
-											"physicalType": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "PipelineName",
-											"type": "String"
-										},
-										"sink": {
-											"name": "PipelineName",
-											"type": "String",
-											"physicalType": "String"
-										}
-									}
-								],
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "customers",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "copy_add_Cols",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"annotations": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Schema_check')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Get Metadata1",
-						"type": "GetMetadata",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataset": {
-								"referenceName": "customers",
-								"type": "DatasetReference",
-								"parameters": {}
-							},
-							"fieldList": [
-								"structure"
-							],
-							"storeSettings": {
-								"type": "AzureBlobStorageReadSettings",
-								"enablePartitionDiscovery": false
-							},
-							"formatSettings": {
-								"type": "DelimitedTextReadSettings"
-							}
-						}
-					},
-					{
-						"name": "Refschema",
-						"type": "GetMetadata",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataset": {
-								"referenceName": "customers_schema",
-								"type": "DatasetReference",
-								"parameters": {}
-							},
-							"fieldList": [
-								"structure"
-							],
-							"storeSettings": {
-								"type": "AzureBlobStorageReadSettings",
-								"enablePartitionDiscovery": false
-							},
-							"formatSettings": {
-								"type": "DelimitedTextReadSettings"
-							}
-						}
-					},
-					{
-						"name": "If Condition1",
-						"type": "IfCondition",
-						"dependsOn": [
-							{
-								"activity": "Get Metadata1",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							},
-							{
-								"activity": "Refschema",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"expression": {
-								"value": "@equals(activity('Get Metadata1').output.structure,activity('Refschema').output.structure )",
-								"type": "Expression"
-							},
-							"ifTrueActivities": [
-								{
-									"name": "Wait1",
-									"type": "Wait",
-									"dependsOn": [],
-									"userProperties": [],
-									"typeProperties": {
-										"waitTimeInSeconds": 1
-									}
-								}
-							]
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"annotations": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/scd_type1')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "scd1_sourcee",
-								"type": "DatasetReference"
-							},
-							"name": "source1"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "scd1_outputt",
-								"type": "DatasetReference"
-							},
-							"name": "sink1"
-						}
-					],
-					"transformations": [
-						{
-							"name": "alterRow1"
-						}
-					],
-					"scriptLines": [
-						"source(output(",
-						"          CustomerID as integer,",
-						"          FirstName as string,",
-						"          LastName as string,",
-						"          City as string,",
-						"          Country as string,",
-						"          UpdatedDate as date",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     ignoreNoFilesFound: false) ~> source1",
-						"source1 alterRow(upsertIf(1 == 1)) ~> alterRow1",
-						"alterRow1 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          CustomerID as integer,",
-						"          FirstName as string,",
-						"          LastName as string,",
-						"          City as string,",
-						"          Country as string,",
-						"          UpdatedDate as date",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:false,",
-						"     updateable:false,",
-						"     upsertable:true,",
-						"     keys:['CustomerID'],",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError',",
-						"     mapColumn(",
-						"          CustomerID,",
-						"          FirstName,",
-						"          LastName,",
-						"          City,",
-						"          Country,",
-						"          UpdatedDate",
-						"     )) ~> sink1"
-					]
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/PARAMETERIZE')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Data flow",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "Parameterize",
-								"type": "DataFlowReference",
-								"parameters": {
-									"deptname": {
-										"value": "'@{pipeline().parameters.Department_Name}'",
-										"type": "Expression"
-									}
-								},
-								"datasetParameters": {
-									"source": {},
-									"sink": {}
-								}
-							},
-							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
-							},
-							"traceLevel": "Fine"
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"parameters": {
-					"Department_Name": {
-						"type": "string"
-					}
-				},
-				"annotations": [],
-				"lastPublishTime": "2025-07-10T03:28:25Z"
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Validate_schema')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Data flow1",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "Validate_Schema",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"source1": {},
-									"sink": {}
-								}
-							},
-							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
-							},
-							"traceLevel": "Fine"
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"annotations": [],
-				"lastPublishTime": "2025-07-10T03:41:07Z"
 			},
 			"dependsOn": []
 		}

@@ -273,9 +273,6 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
-					},
-					"AzureBlobStorage3_properties_typeProperties_connectionString_secretName": {
-						"value": "[parameters('AzureBlobStorage3_properties_typeProperties_connectionString_secretName')]"
 					}
 				}
 			},
@@ -296,6 +293,9 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"AzureBlobStorage3_properties_typeProperties_connectionString_secretName": {
+						"value": "[parameters('AzureBlobStorage3_properties_typeProperties_connectionString_secretName')]"
 					},
 					"SelfhostedIR_LS_properties_typeProperties_url": {
 						"value": "[parameters('SelfhostedIR_LS_properties_typeProperties_url')]"
