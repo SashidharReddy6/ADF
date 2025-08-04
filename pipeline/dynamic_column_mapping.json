@@ -1,0 +1,62 @@
+{
+	"name": "dynamic_column_mapping",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"value": "@json(' \"type\": \"TabularTranslator\",\n                        \"mappings\": [\n                            {\n                                \"source\": {\n                                    \"name\": \"OrderID\",\n                                    \"type\": \"String\",\n                                    \"physicalType\": \"String\"\n                                },\n                                \"sink\": {\n                                    \"name\": \"OrderID\",\n                                    \"type\": \"String\",\n                                    \"physicalType\": \"String\"\n                                }\n                            },\n                            {\n                                \"source\": {\n                                    \"name\": \"CustomerID\",\n                                    \"type\": \"String\",\n                                    \"physicalType\": \"String\"\n                                },\n                                \"sink\": {\n                                    \"name\": \"CustomerID\",\n                                    \"type\": \"String\",\n                                    \"physicalType\": \"String\"\n                                }\n                            },\n                            {\n                                \"source\": {\n                                    \"name\": \"Amount\",\n                                    \"type\": \"String\",\n                                    \"physicalType\": \"String\"\n                                },\n                                \"sink\": {\n                                    \"name\": \"Amount\",\n                                    \"type\": \"String\",\n                                    \"physicalType\": \"String\"\n                                }\n                            },\n                            {\n                                \"source\": {\n                                    \"name\": \"OrderDate\",\n                                    \"type\": \"String\",\n                                    \"physicalType\": \"String\"\n                                },\n                                \"sink\": {\n                                    \"name\": \"OrderDate\",\n                                    \"type\": \"String\",\n                                    \"physicalType\": \"String\"\n                                }\n                            }\n                        ],\n                        \"typeConversion\": true,\n                        \"typeConversionSettings\": {\n                            \"allowDataTruncation\": true,\n                            \"treatBooleanAsNumber\": false\n                        }\n                    }')",
+						"type": "Expression"
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "customers",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DelimitedText14",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}
