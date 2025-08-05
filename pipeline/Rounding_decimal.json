@@ -14,25 +14,12 @@
 				"typeProperties": {
 					"variableName": "Number",
 					"value": {
-						"value": "@concat(split(string(mul(float(pipeline().parameters.Actualnumber), float(pipeline().parameters.decimal_floater))), '.')[0], '.', substring(split(string(mul(float(pipeline().parameters.Actualnumber), float(pipeline().parameters.decimal_floater))), '.')[1], 0, 3))\n",
+						"value": "@string(div(float(split(string(mul(123.34231,100)), '.')[0]),100))\n",
 						"type": "Expression"
 					}
 				}
 			}
 		],
-		"parameters": {
-			"Actualnumber": {
-				"type": "float"
-			},
-			"decimal_floater": {
-				"type": "int"
-			}
-		},
-		"variables": {
-			"Number": {
-				"type": "String"
-			}
-		},
 		"annotations": []
 	}
 }
