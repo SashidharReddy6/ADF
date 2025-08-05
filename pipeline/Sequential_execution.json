@@ -14,20 +14,20 @@
 				"typeProperties": {
 					"variableName": "variable1",
 					"value": {
-						"value": "@int('90')",
+						"value": "kkd",
 						"type": "Expression"
 					}
 				}
 			},
 			{
-				"name": "Wait1",
+				"name": "send ntification",
 				"type": "Wait",
 				"dependsOn": [
 					{
 						"activity": "Set variable3",
 						"dependencyConditions": [
-							"Completed",
-							"Failed"
+							"Skipped",
+							"Succeeded"
 						]
 					}
 				],
