@@ -1,0 +1,92 @@
+{
+	"name": "Sequential_execution",
+	"properties": {
+		"activities": [
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "variable1",
+					"value": {
+						"value": "@int('90')",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Wait1",
+				"type": "Wait",
+				"dependsOn": [
+					{
+						"activity": "Set variable3",
+						"dependencyConditions": [
+							"Completed",
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"waitTimeInSeconds": 1
+				}
+			},
+			{
+				"name": "Set variable2",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Set variable1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "variable2",
+					"value": "sashidhar"
+				}
+			},
+			{
+				"name": "Set variable3",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Set variable2",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "variable1",
+					"value": "ravi"
+				}
+			}
+		],
+		"variables": {
+			"variable1": {
+				"type": "String"
+			},
+			"variable2": {
+				"type": "String"
+			}
+		},
+		"annotations": []
+	}
+}
