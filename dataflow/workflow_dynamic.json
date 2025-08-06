@@ -6,7 +6,7 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "DelimitedText25",
+						"referenceName": "source_dy",
 						"type": "DatasetReference"
 					},
 					"name": "source1"
@@ -30,18 +30,10 @@
 				"parameters{",
 				"     filterrule as string",
 				"}",
-				"source(output(",
-				"          CustomerID as string,",
-				"          FirstName as string,",
-				"          LastName as string,",
-				"          City as string,",
-				"          Country as string,",
-				"          UpdatedDate as string",
-				"     ),",
-				"     allowSchemaDrift: true,",
+				"source(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> source1",
-				"source1 filter(ERROR_FUNCTION('toBoolean(expr($$filterrule))')) ~> filter1",
+				"source1 filter(toBoolean(expr($filterrule))) ~> filter1",
 				"filter1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
