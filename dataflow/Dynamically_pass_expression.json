@@ -1,0 +1,35 @@
+{
+	"name": "Dynamically_pass_expression",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "customers",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "filter1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          OrderID as string,",
+				"          CustomerID as string,",
+				"          Amount as string,",
+				"          OrderDate as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source1 filter(byName('OrderID') == '101') ~> filter1"
+			]
+		}
+	}
+}
