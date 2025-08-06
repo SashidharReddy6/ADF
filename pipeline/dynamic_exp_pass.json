@@ -72,6 +72,14 @@
 											"value": "'@{item().rule}'",
 											"type": "Expression"
 										}
+									},
+									"datasetParameters": {
+										"source1": {
+											"FileName": {
+												"value": "@item().filename",
+												"type": "Expression"
+											}
+										}
 									}
 								},
 								"compute": {
