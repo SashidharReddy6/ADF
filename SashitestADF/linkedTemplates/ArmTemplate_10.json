@@ -1166,8 +1166,7 @@
 						"     ignoreNoFilesFound: false) ~> source1",
 						"source1 aggregate(groupBy(CustomerID),",
 						"     Product = collect(Product)) ~> aggregate1",
-						"aggregate1 derive(Product = replace(replace(replace(toString(Product), '[', ''), ']', ''), '\"', '')\r",
-						") ~> derivedColumn1",
+						"aggregate1 derive(Product = replace(replace(replace(toString(Product), '[', ''), ']', ''), '\"', '')) ~> derivedColumn1",
 						"derivedColumn1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     input(",
@@ -1212,6 +1211,9 @@
 						}
 					],
 					"scriptLines": [
+						"parameters{",
+						"     hours_diff as integer",
+						"}",
 						"source(output(",
 						"          empId as string,",
 						"          empName as string,",
@@ -1222,7 +1224,7 @@
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     ignoreNoFilesFound: false) ~> source1",
-						"source1 derive(new_time = toTimestamp(lastLoginUTC,'yyyy-MM-dd HH:mm:ss') - hours(4)) ~> derivedColumn1",
+						"source1 derive(new_time = toTimestamp(lastLoginUTC,'yyyy-MM-dd HH:mm:ss') - hours($hours_diff)) ~> derivedColumn1",
 						"derivedColumn1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     input(",
