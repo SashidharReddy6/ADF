@@ -31,8 +31,6 @@
 			{
 				"name": "Set variable1",
 				"type": "SetVariable",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Lookup1",
@@ -47,14 +45,54 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"variableName": "CustomerID",
-					"value": ""
+					"variableName": "CustomerID_PL",
+					"value": {
+						"value": "@int(activity('Lookup1').output.value[0].CustomerID)",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Data flow1",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [
+					{
+						"activity": "Set variable1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "dataflow1",
+						"type": "DataFlowReference",
+						"parameters": {
+							"CustomerID": {
+								"value": "@variables('CustomerID_PL')",
+								"type": "Expression"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
 				}
 			}
 		],
 		"variables": {
-			"CustomerID": {
-				"type": "String"
+			"CustomerID_PL": {
+				"type": "Integer"
 			}
 		},
 		"annotations": []
