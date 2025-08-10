@@ -19,7 +19,7 @@
 				"container": "input"
 			},
 			"sheetIndex": {
-				"value": "@int(dataset().SheetIndex)",
+				"value": "@dataset().SheetIndex",
 				"type": "Expression"
 			},
 			"firstRowAsHeader": true
