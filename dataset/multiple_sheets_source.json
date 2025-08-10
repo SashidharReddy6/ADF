@@ -1,0 +1,29 @@
+{
+	"name": "multiple_sheets_source",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage_LS",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"SheetIndex": {
+				"type": "int"
+			}
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "multiple_sheets_source.xlsx",
+				"container": "input"
+			},
+			"sheetIndex": {
+				"value": "@int(dataset().SheetIndex)",
+				"type": "Expression"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": []
+	}
+}
