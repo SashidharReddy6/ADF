@@ -17,7 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "DECLARE @sample NVARCHAR(500)\nSET @sample = 'CREATE TABLE sashi (id INT)' \n\n\nEXEC sp_executesql @sample\n\nSELECT 1 AS test",
+						"sqlReaderQuery": "DECLARE @sample nvarchar(500000)\nset @sample = 'create table sashidhar09'\nEXEC sp_execute @sample \nselect 1 as test",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
